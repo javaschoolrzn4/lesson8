@@ -1,0 +1,173 @@
+package com.javarzn.reflection.base;
+
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Objects;
+
+public class Academic {
+    public static final String TEST_STRING = "testString";
+
+    public static void main(String[] args) {
+        // Шаг 1
+        // Рассмотрим стандартный спобос создания объекта
+//        TheCat theCat = new TheCat();
+//        System.out.println("Голос по умолчанию: " + theCat.getVoice());
+//
+//        // на текущий момент у нас некий экземпляр класса, и из него мы можем понять какой класс перед нами
+//        Class currentClass = theCat.getClass();
+//
+//        // получение имени класса
+//        String classNameString = TEST_STRING.getClass().getName();
+//        String className = currentClass.getName();
+//        String classNameFromKey = TheCat.class.getName();
+//
+//        System.out.println("Полученное имя для класса нашего объекта: " + className);
+//        System.out.println("Полученное имя для класса через class: " + classNameFromKey);
+//        System.out.println("Полученное имя для стандартного класса: " + classNameString);
+//        System.out.println();
+
+//        // Шаг 2
+//        // Рассмотрим второй способ создания объекта
+//        try {
+//            Class theCatClass = Class.forName("TheCat");
+//            System.out.println("Полученное имя для theCatClass: " + theCatClass.getName());
+//            System.out.println("Голос по умолчанию: " + theCatClass.getVoice());
+//            TheCat theCatClassInstance = (TheCat) theCatClass.newInstance();
+//            System.out.println("Голос по умолчанию: " + theCatClassInstance.getVoice());
+//            Class someClass = Class.forName("ru.rsreu.sbt.jteam.reflection.someClass");
+//            System.out.println("Полученное имя для someClass: " + someClass.getName());
+//            System.out.println();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (InstantiationException e) {
+//            e.printStackTrace();
+//        }
+
+//        // Шаг 3
+//        // Получение модификаторов доступа для класса
+//        int classModifiers = TheCat.class.getModifiers();
+//        if (Modifier.isPublic(classModifiers)) {
+//            System.out.println("Класс TheCat имеет модификатор public");
+//        }
+//        if (Modifier.isAbstract(classModifiers)) {
+//            System.out.println("Класс TheCat имеет модификатор abstract");
+//        }
+//        if (Modifier.isFinal(classModifiers)) {
+//            System.out.println("Класс TheCat имеет модификатор final");
+//        }
+
+//        // Шаг 4
+//        // Получение суперклассов
+//        Class superclass = TheCat.class.getSuperclass();
+//        System.out.println("Класс TheCat имеет суперкласс: " + superclass);
+
+
+//        // Шаг 5
+//        // Получение интерфейсов
+//        Class[] interfaces = TheCat.class.getInterfaces();
+//        for (Class cInterface : interfaces) {
+//            System.out.println("Класс TheCat реализует: " + cInterface.getName());
+//        }
+
+//        // Шаг 6
+//        // Получение полей класса
+//        Field[] publicFields = TheCat.class.getFields();
+//        for (Field field : publicFields) {
+//            Class fieldType = field.getType();
+//            System.out.println("Имя поля: " + field.getName());
+//            System.out.println("Тип поля: " + fieldType.getName());
+//            System.out.println();
+//        }
+//
+//        // Получеине поле класса
+//        try {
+//            Field publicField = TheCat.class.getField("name");
+//        } catch (NoSuchFieldException e) {
+//            e.printStackTrace();
+//        }
+
+//        // Шаг 7
+//        // Получение конструктора
+//        Constructor[] constructors = TheCat.class.getConstructors();
+//        for (Constructor constructor : constructors) {
+//            System.out.print("Конструктор: " + constructor.getName() + "(");
+//            Class[] paramTypes = constructor.getParameterTypes();
+//            for (int i = 0; i < paramTypes.length; i++) {
+//                System.out.print(paramTypes[i].getName());
+//                if (i < paramTypes.length - 1) System.out.print(", ");
+//            }
+//            System.out.println(")");
+//        }
+//
+//        // Получение конкретного конструктора
+//        Class[] paramTypes = new Class[]{String.class, int.class};
+//        try {
+//            Constructor currentConstructor = TheCat.class.getConstructor(paramTypes);
+//        } catch (NoSuchMethodException e) {
+//            e.printStackTrace();
+//        }
+
+//        // Шаг 8
+//        // Изучение информации о методе
+//        Method[] methods = TheCat.class.getDeclaredMethods();
+//        for (Method method : methods) {
+//            System.out.println("Имя метода: " + method.getName());
+//            System.out.println("Возвращаемый тип: " + method.getReturnType().getName());
+//            Class[] methodParameterTypes = method.getParameterTypes();
+//            System.out.print("Типы параметров: ");
+//            for (Class paramType : methodParameterTypes) {
+//                System.out.print(" " + paramType.getName());
+//            }
+//            System.out.println("\n");
+//        }
+
+//        // Шаг 9
+//        // Получение конкретного метода и его выполнение
+        Class[] paramTypesM = new Class[]{int.class, String.class};
+        try {
+            Method m = TheCat.class.getMethod("methodA", paramTypesM);
+            m.invoke(TheCat.class, args);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+    public void getAllSuper(Class clazz) {
+        if (Objects.nonNull(clazz)) {
+            Class superClazz = clazz.getSuperclass();
+            if (Objects.nonNull(superClazz)) {
+                System.out.println(clazz.getSimpleName() + " " + superClazz.getName());
+            }
+        }
+    }
+    public static void writeClassInterfaces(Class clazz) {
+        if (Objects.nonNull(clazz)) {
+            Class[] ifaces = clazz.getInterfaces();
+            for (iface:
+                 ifaces) {
+                System.out.println(iface.get);
+            }
+            if (Objects.nonNull(ifaces)) {
+                System.out.println(clazz.getSimpleName() + " " + ifaces.);
+            }
+        }
+    }
+    private static void writeAllFields(Class clazz) {
+        if (Objects.nonNull(clazz)) {
+            Field[] fields = clazz.getDeclaredFields();
+            for (Field field :
+                    fields) {
+                System.out.println(field.getName());
+            }
+            writeAllFields();
+        }
+    }
+}
